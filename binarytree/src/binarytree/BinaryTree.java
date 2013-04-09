@@ -18,6 +18,7 @@ public class BinaryTree {
 		int data;
 		Node left;
 		Node right;
+		Node parent;
 	}
 	
 	public boolean lookup(int data){
@@ -37,21 +38,85 @@ public class BinaryTree {
 		}
 	}
 	
-	public void insert(int data){
-		this.root = insert(this.root,data);
+	public void search(int data){
+		Node node = search(root, data);
+		System.out.println(node.data);
 	}
 	
-	public Node insert(Node node,int data){
-		if(node==null){
-			node = new Node(data);
-		}
-		else if(data<=node.data){
-			node.left = insert(node.left,data);
-		}else {
-			node.right = insert(node.right,data);
+	public Node search(Node node, int data){
+		
+		while(node!=null&& node.data!=data){
+			if(data<node.data){
+				node = node.left;
+			}else{
+				node = node.right;
+			}
 		}
 		
 		return node;
+	}
+	
+	public Node getSuccessor(Node node){
+		if(node.right!=null){
+			return getMin(node.right);
+		}
+		else{
+			Node parent = node.parent;
+			while(parent!=null&&node.data==parent.right.data){
+				node = parent;
+				parent = parent.parent;
+			}
+			return parent;
+		}
+		
+	}
+	
+	public Node getPredecessor(Node node){
+		if(node.left!=null){
+			return getMax(node.left);
+		}
+		else{
+			Node parent = node.parent;
+			while(parent!=null&&node.data==parent.left.data){
+				node = parent ;
+				parent = parent.parent;
+			}
+			return parent;
+		}
+	}
+	
+	public Node getMin(Node node){
+		while(node.left!=null){
+			node = node.left;
+		}
+		
+		return node;
+	}
+	
+	public Node getMax(Node node){
+		while(node.right!=null){
+			node = node.right;
+		}
+		
+		return node;
+	}
+	
+	public void insert(int data){
+		this.root = insert(null, this.root,data);
+	}
+	
+	public Node insert(Node parent, Node child, int data){
+		if(child==null){
+			child = new Node(data);
+			child.parent=parent;
+		}
+		else if(data<=child.data){
+			child.left = insert(child,child.left,data);
+		}else {
+			child.right = insert(child, child.right,data);
+		}
+		
+		return child;
 	}
 	
 	public void iterator(){

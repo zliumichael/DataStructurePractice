@@ -12,10 +12,11 @@ public class Test {
 		bt123.insert( 1);
 		bt123.insert( 4);
 		bt123.insert( 3);
+		bt123.search(3);
 		//System.out.println(bt123.getDepth());
 		//bt123.mirror();
 		//bt123.printPaths();
-		bt123.preOrderByStack();
+		//bt123.preOrderByStack();
 		//bt123.iterator();
 	}
 }
